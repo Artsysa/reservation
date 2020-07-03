@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="" th:src="@{/js/jquery-1.9.1.min.js}" type="text/javascript"></script>
+		<script src="" th:src="@{/js/bootstrap.min.js}"type="text/javascript" ></script>
+		<link href="" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+	</head>
+	<body>
+	<div class="header" style="    box-shadow: 5px 5px 5px #fff, 5px -5px 5px #dff0d8, -5px 5px 5px #555, -5px -5px 5px #ffffff;">
+		<div class="page-wrap">
+			<div class="container">
+				<a href="#" class="link-unstyled"><h1 class="logo">驾校预约管理后台</h1></a>
+			</div>
+		</div>
+	</div>
+	<div class="panel panel-info" style="    width: 600px;
+    margin: 150px auto;">
+		<div class="panel-heading">用户登录</div>
+		<div class="panel-body">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">用户名</label>
+					<div class="col-sm-10">
+						<input type="text" id="username" class="form-control" placeholder="用户名">
+					</div>
+				</div>
+				<div class="form-group">
+					<label  class="col-sm-2 control-label">密码</label>
+					<div class="col-sm-10">
+						<input type="password" id="password" class="form-control" placeholder="密码">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button   class="btn btn-success " type="button" id="login" style="width: 466px;">登录</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	</body>
+
+  <script>
+	  $("#login").click(function(){
+	  	var us=$("#username").val()
+		var pas=$("#password").val()
+          if(us!=null&&us!=""&&pas!=null&&pas!=""){
+              Ajax(us,pas)
+
+		  }else{
+          	alert("用户名或密码不能为空")
+			  return false;
+		  }
+
+	  })
+         function Ajax(usr,pass){
+
+			 $.ajax({
+				 url:'/back/login',
+				 type:'post',
+				 datetype:'json',
+				 data:{
+					 'username':usr,
+					 'password':pass
+				 },
+				 success:function (msg) {
+					 if(msg=="1"){
+						 window.location.href = '/main';
+					 }
+					 else alert(msg)
+				 },
+
+			 })
+		 }
+
+
+  </script>
+</html>

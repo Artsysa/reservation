@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="" th:src="@{/js/jquery-1.9.1.min.js}" type="text/javascript"></script>
+    <script src="" th:src="@{/js/bootstrap.min.js}"type="text/javascript" ></script>
+    <link href="" th:href="@{/css/bootstrap.css}" rel="stylesheet">
+</head>
+
+<body >
+
+<div class="panel panel-info">
+    <div class="panel-heading">条件选择</div>
+    <div class="panel-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="btn-group">
+                        <button type="button" id="coachlist" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            请选择查询的教练 <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu" style="height:100px;overflow:scroll;" id="coach" >
+                            <li th:each="c:${coachlist}">
+                                <a href="#"  th:value="${c.idcard}" value="1" th:text="${c.name}+${c.idcard}">可以</a>
+                            </li>
+                        </ul>
+
+
+                    </div>
+                </div>
+                <div class="col-xs-3 col-xs-offset-2">
+                    <div class="btn-group  shcolarlist datew" th:fragment="date">
+                        <button type="button" id="time" class="btn btn-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            请选择查询的时间 <span class="caret"></span>
+                        </button>
+
+                        <ul class="dropdown-menu" style="height:100px;overflow:scroll;"  >
+
+                            <li >
+                                <a href="#" onclick="select(this)" id="now" th:text="${now}">2019-11-12</a>
+                            </li>
+                            <li >
+                                <a href="#" id="next" onclick="select(this)" th:text="${next}">2019-11-12</a>
+                            </li>
+                        </ul>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="manager" th:fragment="manager">
+<table class="table table-striped  table-hover " th:each="c:${onecount}">
+    <tr>
+        <td  class="warning">时间段</td>
+        <td  class="warning">练车日期</td>
+        <td  class="warning">当前可预约人数</td>
+        <td  class="warning">状态</td>
+
+    </tr>
+    <tr>
+        <td >8:00~8:30</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time1}=='9'?'管理员已设置当前时间禁止预约':${c.time1}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time1">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time1" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >8:30~9:00</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time2}=='9'?'管理员已设置当前时间禁止预约':${c.time2}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time2">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time2" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >9:00~9:30</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time3}=='9'?'管理员已设置当前时间禁止预约':${c.time3}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time3">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time3" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >9:30~10:00</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time4}=='9'?'管理员已设置当前时间禁止预约':${c.time4}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time4">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time4" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >10:00~10:30</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time5}=='9'?'管理员已设置当前时间禁止预约':${c.time5}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time5">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time5" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >10:30~11:00</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time6}=='9'?'管理员已设置当前时间禁止预约':${c.time6}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time6">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time6" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >11:00~11:30</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time7}=='9'?'管理员已设置当前时间禁止预约':${c.time7}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time7">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time7" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >11:30~12:00</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time8}=='9'?'管理员已设置当前时间禁止预约':${c.time8}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time8">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time8" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >12:00~12:30</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time9}=='9'?'管理员已设置当前时间禁止预约':${c.time9}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time9">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time9" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >12:30~13:00</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time10}=='9'?'管理员已设置当前时间禁止预约':${c.time10}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time10">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time10" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >13:00~13:30</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time11}=='9'?'管理员已设置当前时间禁止预约':${c.time11}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time11">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time11" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >13:30~14:00</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time12}=='9'?'管理员已设置当前时间禁止预约':${c.time12}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time12">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time12" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >14:00~14:30</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time13}=='9'?'管理员已设置当前时间禁止预约':${c.time13}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time13">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time13" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+    <td >14:30~15:00</td>
+    <td th:text="${c.id}">...</td>
+    <td th:text="@{${c.time14}=='9'?'管理员已设置当前时间禁止预约':${c.time14}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time14">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time14" onclick="info(this)">查看预约详情</button>
+        </td>
+</tr>
+    <tr>
+        <td >15:00~15:30</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time15}=='9'?'管理员已设置当前时间禁止预约':${c.time15}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time15">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time15" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >15:30~16:00</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time16}=='9'?'管理员已设置当前时间禁止预约':${c.time16}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time16">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time16" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >16:00~16:30</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time17}=='9'?'管理员已设置当前时间禁止预约':${c.time17}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time17">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time17" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >16:30~17:00</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time18}=='9'?'管理员已设置当前时间禁止预约':${c.time18}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time18">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time18" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >17:00~17:30</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time19}=='9'?'管理员已设置当前时间禁止预约':${c.time19}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)" data-toggle="modal" data-target="#delete" value="time19">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time19" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+    <tr>
+        <td >17:30~18:00</td>
+        <td th:text="${c.id}">...</td>
+        <td th:text="@{${c.time20}=='9'?'管理员已设置当前时间禁止预约':${c.time20}}">...</td>
+
+        <td ><button class="btn btn-danger" onclick="setreser(this)"  data-toggle="modal" data-target="#delete" value="time20">设置为不可预约</button>
+            <button class="btn btn-info" data-toggle="modal" data-target="#infopart" value="time20" onclick="info(this)">查看预约详情</button>
+        </td>
+    </tr>
+</table>
+</div>
+
+<div class="modal fade " id="delete" tabindex="-1" role="dialog" aria-labelledby="model" aria-hidden="true">
+    <div class="modal-dialog" style="    width: 200px;
+    margin: 100px auto;">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" >确定要进行当前操作吗</h4>
+            </div>
+            <div class="modal-footer">
+                <button id="ensure" class="btn btn-danger" onclick="ensure()" data-dismiss="modal">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade "  id="infopart" tabindex="-1" role="dialog" aria-labelledby="model" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">当前时间段学员预约情况</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped  table-hover infodetial"  th:fragment="infodetial" >
+                    <tr>
+                        <td class="info" >姓名</td>
+                        <td  class="info">身份证</td>
+                        <td  class="info">预约日期</td>
+                        <td  class="info">预约时间段</td>
+                        <td  class="info">预约状态</td>
+                        <td  class="info">预约时间</td>
+                    </tr>
+                    <tr th:each="ri:${info}">
+                        <td th:text="${ri.name}">...</td>
+                        <td th:text="${ri.userid}">...</td>
+                        <td th:text="${ri.timeid}">...</td>
+                        <td th:text="${ri.timepart}">...</td>
+                        <td th:text="${ri.status=='0'?'未到场':'已训'}">...</td>
+                        <td th:text="${ri.time}">...</td>
+                    </tr>
+
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var n
+    $("#coach li a").click(function(){
+        $("#coachlist").text($(this).text().trim())
+        $("#coachlist").attr('value',$(this).attr('value'))
+         $(".datew").load('/back/date')
+    })
+
+    function select(e) {
+        n=$(e).text()
+        $("#time").text($(e).text())
+        url='/co/oner?coachid='+$("#coachlist").attr('value')+'&date='+$(e).text()
+        $('.manager').load(url)
+    }
+    
+    function info(e) {
+      url='/co/tpl?date='+$("#time").text()+'&coachid='+$("#coachlist").attr('value')+'&timepart='+$(e).attr('value')
+        $('.infodetial').load(url)
+    }
+    var p
+    function setreser(e) {
+       p=$(e).attr('value')
+    }
+    function ensure(){
+        $.ajax({
+          url:'/co/set',
+            type:'post',
+            data:{
+              coachid:$("#coachlist").attr('value'),
+                date:n,
+                timepart:p
+            },
+            success:function (msg) {
+                alert(msg)
+                url='/co/oner?coachid='+$("#coachlist").attr('value')+'&date='+n
+                $('.manager').load(url)
+            },
+            error:function () {
+                alert('服务器繁忙请稍后尝试')
+            }
+        })
+    }
+
+</script>
+</html>
